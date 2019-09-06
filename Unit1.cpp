@@ -32,13 +32,11 @@ void __fastcall TForm1::T_BallTimer(TObject *Sender)
         //defeat
         if(Ball->Left <= Paddle1->Left+Paddle1->Width-15)
         {
-                T_Ball->Enabled = false;
-                Ball->Visible = false;
+                Defeat();
         }
          if(Ball->Left+Ball->Width-15 >= Paddle2->Left)
         {
-                T_Ball->Enabled = false;
-                Ball->Visible = false;
+                Defeat();
         }
 
         //bounce against left paddle
@@ -78,10 +76,13 @@ void __fastcall TForm1::Down2Timer(TObject *Sender)
 void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-        if(Key == 'W') Up1->Enabled = true;
-        if(Key == 'S') Down1->Enabled = true;
-        if(Key == VK_UP) Up2->Enabled = true;
-        if(Key == VK_DOWN) Down2->Enabled = true;
+        if(START->Visible == false)
+        {
+                if(Key == 'W') Up1->Enabled = true;
+                if(Key == 'S') Down1->Enabled = true;
+                if(Key == VK_UP) Up2->Enabled = true;
+                if(Key == VK_DOWN) Down2->Enabled = true;
+        }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
@@ -93,3 +94,34 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
         if(Key == VK_DOWN) Down2->Enabled = false;
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::STARTClick(TObject *Sender)
+{
+        Ball->Left = 400;
+        Ball->Top = 250;
+        Paddle1->Top = 200;
+        Paddle2->Top = 200;
+        Ball->Visible = true;
+        x = -8;
+        y = -8;
+        T_Ball->Enabled = true;
+        START->Visible = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+        Ball->Left = 400;
+        Ball->Top = 250;
+        Paddle1->Top = 200;
+        Paddle2->Top = 200;
+        T_Ball->Enabled = false;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Defeat()
+{
+      T_Ball->Enabled = false;
+      Ball->Visible = false;
+      START->Caption = "Ponów grê";
+      START->Visible = true;
+}

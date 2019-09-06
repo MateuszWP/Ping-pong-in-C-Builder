@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   PixelsPerInch = 96
@@ -529,6 +530,21 @@ object Form1: TForm1
       17291E17291E17291E17291E17291EFFFFFF}
     Transparent = True
   end
+  object START: TButton
+    Left = 416
+    Top = 144
+    Width = 100
+    Height = 30
+    Caption = 'Start'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Arial Narrow'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    OnClick = STARTClick
+  end
   object T_Ball: TTimer
     Interval = 20
     OnTimer = T_BallTimer
@@ -536,24 +552,28 @@ object Form1: TForm1
     Top = 24
   end
   object Up1: TTimer
+    Enabled = False
     Interval = 20
     OnTimer = Up1Timer
     Left = 48
     Top = 56
   end
   object Down1: TTimer
+    Enabled = False
     Interval = 20
     OnTimer = Down1Timer
     Left = 80
     Top = 56
   end
   object Up2: TTimer
+    Enabled = False
     Interval = 20
     OnTimer = Up2Timer
     Left = 48
     Top = 88
   end
   object Down2: TTimer
+    Enabled = False
     Interval = 20
     OnTimer = Down2Timer
     Left = 80
