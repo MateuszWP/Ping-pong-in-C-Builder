@@ -23,6 +23,9 @@ __published:	// IDE-managed Components
         TTimer *Up2;
         TTimer *Down2;
         TButton *START;
+        TLabel *Info;
+        TLabel *Bounce;
+        TLabel *Table;
         void __fastcall T_BallTimer(TObject *Sender);
         void __fastcall Up1Timer(TObject *Sender);
         void __fastcall Down1Timer(TObject *Sender);
@@ -35,6 +38,7 @@ __published:	// IDE-managed Components
         void __fastcall STARTClick(TObject *Sender);
         void __fastcall FormCreate(TObject *Sender);
         void __fastcall Defeat();
+        AnsiString __fastcall InttoString(int number);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
