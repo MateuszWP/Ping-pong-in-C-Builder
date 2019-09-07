@@ -16,6 +16,7 @@ TForm1 *Form1;
         int count = 0;
         int point1 = 0;
         int point2 = 0;
+        int timeToStart = 3;
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -38,15 +39,25 @@ void __fastcall TForm1::T_BallTimer(TObject *Sender)
         //defeat
         if(Ball->Left <= Paddle1->Left+Paddle1->Width-15)
         {
-                Defeat();
-                Info->Caption = "Punkt dla prawego gracza";
                 point2++;
-        }
-         if(Ball->Left+Ball->Width-15 >= Paddle2->Left)
-        {
+                if(point2 < 6)
+                {
+                    Info->Caption = "Punkt dla prawego gracza";
+                }
+                else
+                    Info->Caption = "Wygrana prawego gracza";
                 Defeat();
-                Info->Caption = "Punkt dla lewego gracza";
+        }
+        if(Ball->Left+Ball->Width-15 >= Paddle2->Left)
+        {
                 point1++;
+                if(point1 < 6)
+                {
+                    Info->Caption = "Punkt dla lewego gracza";
+                }
+                else
+                    Info->Caption = "Wygrana lewego gracza";
+                Defeat();
         }
 
         //bounce against left paddle
@@ -108,19 +119,7 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
 //---------------------------------------------------------------------------
 void __fastcall TForm1::STARTClick(TObject *Sender)
 {
-        Ball->Left = 400;
-        Ball->Top = 250;
-        Paddle1->Top = 200;
-        Paddle2->Top = 200;
-        Ball->Visible = true;
-        x = -8;
-        y = -8;
-        T_Ball->Enabled = true;
-        START->Visible = false;
-        Info->Visible = false;
-        count = 0;
-        Bounce->Visible = false;
-        Table->Visible = false;
+        Reset();
 }
 //---------------------------------------------------------------------------
 
@@ -134,20 +133,26 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
         Info->Visible = false;
         Bounce->Visible = false;
         Table->Visible = false;
+        New_game->Visible = false;
+        Time->Visible = false;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::Defeat()
 {
-      T_Ball->Enabled = false;
-      Ball->Visible = false;
-      START->Caption = "Ponów grê";
-      START->Visible = true;
-      Info->Visible = true;
-      Bounce->Caption = "Liczba odbic: " + InttoString(count);
-      Bounce->Visible = true;
-      Table->Caption = InttoString(point1) + " : " + InttoString(point2);
-      Table->Visible = true;
+        T_Ball->Enabled = false;
+        Ball->Visible = false;
+        if(point1 < 6 && point2 < 6)
+        {
+                START->Caption = "Ponów grê";
+                START->Visible = true;
+        }
+        Info->Visible = true;
+        Bounce->Caption = "Liczba odbic: " + InttoString(count);
+        Bounce->Visible = true;
+        Table->Caption = InttoString(point1) + " : " + InttoString(point2);
+        Table->Visible = true;
+        New_game->Visible = true;
 }
 
 AnsiString __fastcall TForm1::InttoString(int number)
@@ -157,3 +162,44 @@ AnsiString __fastcall TForm1::InttoString(int number)
         AnsiString str = tmp.c_str();
         return str;
 }
+void __fastcall TForm1::New_gameClick(TObject *Sender)
+{
+       Reset();
+       point1 = 0;
+       point2 = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Reset()
+{
+        Ball->Left = 400;
+        Ball->Top = 250;
+        Paddle1->Top = 200;
+        Paddle2->Top = 200;
+        Ball->Visible = true;
+        x = -8;
+        y = -8;
+        //T_Ball->Enabled = true;
+        START->Visible = false;
+        Info->Visible = false;
+        count = 0;
+        Bounce->Visible = false;
+        Table->Visible = false;
+        New_game->Visible = false;
+        timeToStart = 3;
+        T_Start->Enabled = true;
+}
+void __fastcall TForm1::T_StartTimer(TObject *Sender)
+{
+       Time->Visible = true;
+       Time->Caption = timeToStart--;
+       if(timeToStart < 0)
+       {
+                T_Ball->Enabled = true;
+                Time->Visible = false;
+                T_Start->Enabled = false;
+
+       }
+}
+//---------------------------------------------------------------------------
+

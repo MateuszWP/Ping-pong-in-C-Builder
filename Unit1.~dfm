@@ -25,8 +25,8 @@ object Form1: TForm1
     Brush.Color = clMoneyGreen
   end
   object Ball: TImage
-    Left = 432
-    Top = 208
+    Left = 424
+    Top = 216
     Width = 32
     Height = 32
     AutoSize = True
@@ -530,9 +530,48 @@ object Form1: TForm1
       17291E17291E17291E17291E17291EFFFFFF}
     Transparent = True
   end
+  object Info: TLabel
+    Left = 336
+    Top = 40
+    Width = 184
+    Height = 23
+    Caption = 'Punkt dla lewego gracza'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Arial Narrow'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Bounce: TLabel
+    Left = 376
+    Top = 8
+    Width = 113
+    Height = 23
+    Caption = 'Liczba odbic: '
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Arial Narrow'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Table: TLabel
+    Left = 376
+    Top = 89
+    Width = 140
+    Height = 56
+    Caption = 'Wynik'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -48
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object START: TButton
-    Left = 416
-    Top = 144
+    Left = 392
+    Top = 176
     Width = 100
     Height = 30
     Caption = 'Start'
