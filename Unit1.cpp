@@ -18,6 +18,7 @@ TForm1 *Form1;
         int point2 = 0;
         int timeToStart = 3;
         int s = 0;
+        char winner = 'L';
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -41,37 +42,47 @@ void __fastcall TForm1::T_BallTimer(TObject *Sender)
         if(Ball->Left <= Paddle1->Left+Paddle1->Width-15)
         {
                 point2++;
+                winner = 'P';
                 if(point2 < 6)
                 {
-                    Info->Caption = "Punkt dla prawego gracza";
+                    Info->Caption = "Punkt dla prawego gracza >";
+                    T_Stopwatch->Enabled = false;
                 }
                 else
-                    Info->Caption = "Wygrana prawego gracza";
+                    Info->Caption = "Wygrana prawego gracza >";
+                    T_Stopwatch->Enabled = false;
                 Defeat();
         }
         if(Ball->Left+Ball->Width-15 >= Paddle2->Left)
         {
                 point1++;
+                winner = 'L';
                 if(point1 < 6)
                 {
-                    Info->Caption = "Punkt dla lewego gracza";
+                    Info->Caption = "< Punkt dla lewego gracza";
+                    T_Stopwatch->Enabled = false;
                 }
                 else
-                    Info->Caption = "Wygrana lewego gracza";
+                    Info->Caption = "< Wygrana lewego gracza";
+                    T_Stopwatch->Enabled = false;
                 Defeat();
         }
 
         //bounce against left paddle
         else if(Ball->Top > Paddle1->Top-Ball->Height/2 && Ball->Top < Paddle1->Top+Paddle1->Height                && Ball->Left < Paddle1->Left+Paddle1->Width)
                 {
-                        if(x<0) x = -x;
+                        if(x<0) x = (x-1)*-1;
+                        if(y>0) y = y + 0.5;
+                        else y = y - 0.5;
                         count++;
                 }
 
         //bounce against right paddle
         else if(Ball->Top > Paddle2->Top-Ball->Height/2 && Ball->Top < Paddle2->Top+Paddle2->Height                && Ball->Left+Ball->Width > Paddle2->Left)
                 {
-                        if(x>0) x = -x;
+                        if(x>0) x = -1*(x+1);
+                        if(y>0) y = y + 0.5;
+                        else y = y - 0.5;
                         count++;
                 }
 }
@@ -126,16 +137,28 @@ void __fastcall TForm1::STARTClick(TObject *Sender)
 
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
-        Ball->Left = 400;
-        Ball->Top = 250;
-        Paddle1->Top = 200;
-        Paddle2->Top = 200;
+        AnsiString text = "Witaj w grze PINGPONG!\n\n";
+        AnsiString text2 = "Lewy gracz steruje klawiszami W i S.\n";
+        AnsiString text3 = "Prawy gracz steruje srzalkami góra i dó³.\n\n";
+        AnsiString text5 = "Gra toczy sie do 6 punktow.\n";
+        AnsiString text6 = "Pilka przyspiesza z kazdym odbiciem od paletek.\n\n";
+        AnsiString text7 = "Powodzenia!";
+        ShowMessage(text + text2 + text3  + text5 + text6 + text7);
+
+        Ball->Left = 420;
+        Ball->Top = 370;
+        Paddle1->Top = 160;
+        Paddle1->Left = 20;
+        Paddle2->Top = 160;
+        Paddle2->Left = 860;
         T_Ball->Enabled = false;
+        Ball->Visible =  false;
         Info->Visible = false;
         Bounce->Visible = false;
         Table->Visible = false;
         New_game->Visible = false;
         Time->Visible = false;
+        T_Stopwatch->Enabled = false;
         Stopwatch->Visible = false;
 }
 //---------------------------------------------------------------------------
@@ -146,16 +169,15 @@ void __fastcall TForm1::Defeat()
         Ball->Visible = false;
         if(point1 < 6 && point2 < 6)
         {
-                START->Caption = "Ponów grê";
+                START->Caption = "Nastêpna runda";
                 START->Visible = true;
         }
         Info->Visible = true;
-        Bounce->Caption = "Liczba odbic: " + InttoString(count);
+        Bounce->Caption = "Ilosc odbic: " + InttoString(count);
         Bounce->Visible = true;
-        Table->Caption = InttoString(point1) + " : " + InttoString(point2);
+        Table->Caption = InttoString(point1) + ":" + InttoString(point2);
         Table->Visible = true;
         New_game->Visible = true;
-        Stopwatch->Visible = true;
 }
 
 AnsiString __fastcall TForm1::InttoString(int number)
@@ -167,6 +189,9 @@ AnsiString __fastcall TForm1::InttoString(int number)
 }
 void __fastcall TForm1::New_gameClick(TObject *Sender)
 {
+       s = 0;
+       Stopwatch->Caption = "00:00:00";
+       T_Stopwatch->Enabled = false;
        Reset();
        point1 = 0;
        point2 = 0;
@@ -175,14 +200,22 @@ void __fastcall TForm1::New_gameClick(TObject *Sender)
 
 void __fastcall TForm1::Reset()
 {
-        Ball->Left = 400;
-        Ball->Top = 250;
-        Paddle1->Top = 200;
-        Paddle2->Top = 200;
-        Ball->Visible = true;
-        x = -8;
-        y = -8;
-        //T_Ball->Enabled = true;
+        Ball->Left = 420;
+        Ball->Top = 210;
+        Paddle1->Top = 160;
+        Paddle1->Left = 20;
+        Paddle2->Top = 160;
+        Paddle2->Left = 860;
+        Ball->Visible = false;
+        if(winner == 'L')
+        {
+                x = 8;
+                y = 8;
+        }
+        else
+                x = -8;
+                y = -8;
+
         START->Visible = false;
         Info->Visible = false;
         count = 0;
@@ -199,10 +232,11 @@ void __fastcall TForm1::T_StartTimer(TObject *Sender)
        if(timeToStart < 0)
        {
                 T_Ball->Enabled = true;
+                Ball->Visible = true;
                 Time->Visible = false;
                 T_Start->Enabled = false;
+                T_Stopwatch->Enabled = true;
                 Stopwatch->Visible = true;
-
        }
 }
 //---------------------------------------------------------------------------
@@ -212,13 +246,23 @@ void __fastcall TForm1::T_StopwatchTimer(TObject *Sender)
         s++;
 
         int hour, min, sek;
+        AnsiString hours, minutes, sekundes;
 
         hour = s/3600;
-        min = (s - hour*3600)/60;
-        sek = s - hour*3600 - min*60;
+        hours =  InttoString(hour);
+        if(hour < 10) hours = "0" + hours;
 
-        Stopwatch->Caption = InttoString(hour) + ":" + InttoString(min) + ":" +InttoString(sek);
+        min = (s - hour*3600)/60;
+        minutes = InttoString(min);
+        if(min < 10) minutes = "0" + minutes;
+
+        sek = s - hour*3600 - min*60;
+        sekundes = InttoString(sek);
+        if(sek < 10) sekundes = "0" + sekundes;
+
+        Stopwatch->Caption = hours + ":" + minutes + ":" + sekundes;
 
 }
 //---------------------------------------------------------------------------
+
 

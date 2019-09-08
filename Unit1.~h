@@ -29,6 +29,8 @@ __published:	// IDE-managed Components
         TButton *New_game;
         TTimer *T_Start;
         TLabel *Time;
+        TLabel *Stopwatch;
+        TTimer *T_Stopwatch;
         void __fastcall T_BallTimer(TObject *Sender);
         void __fastcall Up1Timer(TObject *Sender);
         void __fastcall Down1Timer(TObject *Sender);
@@ -45,6 +47,7 @@ __published:	// IDE-managed Components
         void __fastcall New_gameClick(TObject *Sender);
         void __fastcall Reset();
         void __fastcall T_StartTimer(TObject *Sender);
+        void __fastcall T_StopwatchTimer(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);
