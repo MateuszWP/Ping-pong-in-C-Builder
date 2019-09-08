@@ -582,6 +582,19 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
   end
+  object Stopwatch: TLabel
+    Left = 584
+    Top = 24
+    Width = 244
+    Height = 56
+    Caption = 'Stopwatch'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -48
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object START: TButton
     Left = 384
     Top = 144
@@ -651,5 +664,10 @@ object Form1: TForm1
     OnTimer = T_StartTimer
     Left = 48
     Top = 120
+  end
+  object T_Stopwatch: TTimer
+    OnTimer = T_StopwatchTimer
+    Left = 136
+    Top = 56
   end
 end

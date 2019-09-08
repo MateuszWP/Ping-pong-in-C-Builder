@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 260
-  Top = 148
+  Left = 335
+  Top = 194
   Width = 928
   Height = 480
   Caption = 'Form1'
@@ -25,8 +25,8 @@ object Form1: TForm1
     Brush.Color = clMoneyGreen
   end
   object Ball: TImage
-    Left = 424
-    Top = 216
+    Left = 416
+    Top = 224
     Width = 32
     Height = 32
     AutoSize = True
@@ -546,7 +546,7 @@ object Form1: TForm1
   object Bounce: TLabel
     Left = 376
     Top = 8
-    Width = 113
+    Width = 96
     Height = 23
     Caption = 'Liczba odbic: '
     Font.Charset = EASTEUROPE_CHARSET
@@ -557,8 +557,8 @@ object Form1: TForm1
     ParentFont = False
   end
   object Table: TLabel
-    Left = 376
-    Top = 89
+    Left = 360
+    Top = 73
     Width = 140
     Height = 56
     Caption = 'Wynik'
@@ -569,9 +569,22 @@ object Form1: TForm1
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object START: TButton
-    Left = 392
+  object Time: TLabel
+    Left = 400
     Top = 176
+    Width = 80
+    Height = 42
+    Caption = 'Time'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -37
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+  end
+  object START: TButton
+    Left = 384
+    Top = 144
     Width = 100
     Height = 30
     Caption = 'Start'
@@ -583,6 +596,21 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 0
     OnClick = STARTClick
+  end
+  object New_game: TButton
+    Left = 392
+    Top = 272
+    Width = 89
+    Height = 25
+    Caption = 'Nowa gra'
+    Font.Charset = EASTEUROPE_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+    OnClick = New_gameClick
   end
   object T_Ball: TTimer
     Interval = 20
@@ -617,5 +645,11 @@ object Form1: TForm1
     OnTimer = Down2Timer
     Left = 80
     Top = 88
+  end
+  object T_Start: TTimer
+    Enabled = False
+    OnTimer = T_StartTimer
+    Left = 48
+    Top = 120
   end
 end

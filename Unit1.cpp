@@ -17,6 +17,7 @@ TForm1 *Form1;
         int point1 = 0;
         int point2 = 0;
         int timeToStart = 3;
+        int s = 0;
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -135,6 +136,7 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
         Table->Visible = false;
         New_game->Visible = false;
         Time->Visible = false;
+        Stopwatch->Visible = false;
 }
 //---------------------------------------------------------------------------
 
@@ -153,6 +155,7 @@ void __fastcall TForm1::Defeat()
         Table->Caption = InttoString(point1) + " : " + InttoString(point2);
         Table->Visible = true;
         New_game->Visible = true;
+        Stopwatch->Visible = true;
 }
 
 AnsiString __fastcall TForm1::InttoString(int number)
@@ -198,8 +201,24 @@ void __fastcall TForm1::T_StartTimer(TObject *Sender)
                 T_Ball->Enabled = true;
                 Time->Visible = false;
                 T_Start->Enabled = false;
+                Stopwatch->Visible = true;
 
        }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::T_StopwatchTimer(TObject *Sender)
+{
+        s++;
+
+        int hour, min, sek;
+
+        hour = s/3600;
+        min = (s - hour*3600)/60;
+        sek = s - hour*3600 - min*60;
+
+        Stopwatch->Caption = InttoString(hour) + ":" + InttoString(min) + ":" +InttoString(sek);
+
 }
 //---------------------------------------------------------------------------
 
